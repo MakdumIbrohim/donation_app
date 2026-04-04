@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:donation_app/constant/app_colors.dart';
+import 'package:donation_app/screens/first_page/my_custom_form.dart';
 
 class FirstScreen extends StatelessWidget {
   const FirstScreen({super.key});
@@ -21,13 +22,7 @@ class FirstScreen extends StatelessWidget {
               colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
             ),
             SizedBox(height: 20.0,),
-            TextFormField(
-              decoration: InputDecoration(
-                icon: Icon(Icons.person),
-                hintText: 'Masukkan username',
-                labelText: 'Username'
-              ),
-            )
+            MyCustomForm()
           ],
         ),
       ),
