@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:donation_app/constant/app_colors.dart';
+import 'package:donation_app/constants/app_colors.dart';
 
-class MyCustomForm extends StatefulWidget {
-  const MyCustomForm({super.key});
+class LoginForm extends StatefulWidget {
+  const LoginForm({super.key});
 
   @override
-  State<MyCustomForm> createState() => _MyCustomFormState();
+  State<LoginForm> createState() => _LoginFormState();
 }
 
-class _MyCustomFormState extends State<MyCustomForm> {
+class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   String? _username;
   String? _password;

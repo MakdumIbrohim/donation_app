@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:donation_app/constant/app_colors.dart';
-import 'package:donation_app/screens/first_page/my_custom_form.dart';
+import 'package:donation_app/constants/app_colors.dart';
+import 'package:donation_app/widgets/forms/login_form.dart';
 
-class FirstScreen extends StatelessWidget {
-  const FirstScreen({super.key});
+class FirstPage extends StatelessWidget {
+  const FirstPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,8 @@ class FirstScreen extends StatelessWidget {
               height: 100.0,
               colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
             ),
-            SizedBox(height: 20.0,),
-            MyCustomForm()
+            const SizedBox(height: 20.0),
+            const LoginForm(),
           ],
         ),
       ),
