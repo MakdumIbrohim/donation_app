@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:donation_app/constants/app_colors.dart';
+import 'package:donation_app/pages/second_page.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -9,9 +10,13 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  static const _demoUsername = 'admin';
+  static const _demoPassword = '12345';
+
   final _formKey = GlobalKey<FormState>();
   String? _username;
   String? _password;
+  bool _isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +57,22 @@ class _LoginFormState extends State<LoginForm> {
                 height: 1.4,
               ),
             ),
+            const SizedBox(height: 12),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF4FBF9),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: const Text(
+                'Gunakan username: admin dan password: 12345',
+                style: TextStyle(
+                  color: Color(0xFF12372A),
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
             const SizedBox(height: 24),
             UsernameField(
               onSaved: (value) => _username = value,
@@ -63,6 +84,12 @@ class _LoginFormState extends State<LoginForm> {
             ),
             const SizedBox(height: 16),
             PasswordField(
+              isPasswordVisible: _isPasswordVisible,
+              onToggleVisibility: () {
+                setState(() {
+                  _isPasswordVisible = !_isPasswordVisible;
+                });
+              },
               onSaved: (value) => _password = value,
               validator: (value) {
                 return (value == null || value.isEmpty)
@@ -77,8 +104,30 @@ class _LoginFormState extends State<LoginForm> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
+
+                    final username = _username?.trim();
+                    final password = _password?.trim();
+
+                    if (username == _demoUsername && password == _demoPassword) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Login berhasil, selamat datang!'),
+                        ),
+                      );
+
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const SecondPage(),
+                        ),
+                      );
+                      return;
+                    }
+
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Login: $_username / $_password')),
+                      const SnackBar(
+                        content: Text('Username atau password salah'),
+                        backgroundColor: Colors.redAccent,
+                      ),
                     );
                   }
                 },
@@ -137,11 +186,15 @@ class UsernameField extends StatelessWidget {
 }
 
 class PasswordField extends StatelessWidget {
+  final bool isPasswordVisible;
+  final VoidCallback onToggleVisibility;
   final void Function(String?) onSaved;
   final String? Function(String?) validator;
 
   const PasswordField({
     super.key,
+    required this.isPasswordVisible,
+    required this.onToggleVisibility,
     required this.onSaved,
     required this.validator,
   });
@@ -153,8 +206,16 @@ class PasswordField extends StatelessWidget {
         labelText: 'Password',
         hintText: 'Masukkan Password',
         icon: Icons.lock_outline_rounded,
+        suffixIcon: IconButton(
+          onPressed: onToggleVisibility,
+          icon: Icon(
+            isPasswordVisible
+                ? Icons.visibility_off_outlined
+                : Icons.visibility_outlined,
+          ),
+        ),
       ),
-      obscureText: true,
+      obscureText: !isPasswordVisible,
       onSaved: onSaved,
       validator: validator,
     );
@@ -165,6 +226,7 @@ InputDecoration _buildDecoration({
   required String labelText,
   required String hintText,
   required IconData icon,
+  Widget? suffixIcon,
 }) {
   final border = OutlineInputBorder(
     borderRadius: BorderRadius.circular(18),
@@ -175,6 +237,7 @@ InputDecoration _buildDecoration({
     labelText: labelText,
     hintText: hintText,
     prefixIcon: Icon(icon, color: const Color(0xFF4F6F52)),
+    suffixIcon: suffixIcon,
     filled: true,
     fillColor: const Color(0xFFF4FBF9),
     contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
