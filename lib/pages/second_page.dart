@@ -50,23 +50,7 @@ class _SecondPageState extends State<SecondPage> {
                 height: 1.5,
               ),
             ),
-            const SizedBox(height: 24),
-            Card(
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: colorScheme.primary.withValues(alpha: 0.12),
-                  child: Icon(
-                    Icons.volunteer_activism,
-                    color: colorScheme.primary,
-                  ),
-                ),
-                title: const Text('Program Donasi'),
-                subtitle: const Text(
-                  'Tambahkan daftar campaign atau informasi donasi di sini.',
-                ),
-              ),
-            ),
-            SizedBox(height: 24.0),
+            SizedBox(height: 12.0),
             CustomCard(
               imageUrl: 'https://placehold.co/300x200/png',
               title: 'Donasiku',

@@ -17,34 +17,41 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(5.0),
+      padding: const EdgeInsets.all(5.0),
       decoration: BoxDecoration(
         color: AppColors.primary,
         borderRadius: BorderRadius.circular(15.0),
       ),
-      child: Column(
-        children: [
-          ListTile(
-            leading: imageUrl.isNotEmpty
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(14.0),
-                    child: Image.network(
-                      imageUrl,
-                      width: 56,
-                      height: 56,
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                : CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Colors.grey[300],
-                    child: Icon(Icons.image, color: Colors.black54),
-                  ),
-            title: Text(title),
-            subtitle: Text(description),
-          ),
-          const SizedBox(height: 5.0,)
-        ],
+      child: ListTile(
+        leading: imageUrl.isNotEmpty
+            ? ClipRRect(
+                borderRadius: BorderRadius.circular(14.0),
+                child: Image.network(
+                  imageUrl,
+                  width: 56,
+                  height: 56,
+                  fit: BoxFit.cover,
+                ),
+              )
+            : CircleAvatar(
+                radius: 25,
+                backgroundColor: Colors.grey[300],
+                child: const Icon(Icons.image, color: Colors.black54),
+              ),
+        title: Text(title),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(description),
+            const SizedBox(height: 8.0),
+            CircleAvatar(
+              radius: 15.0,
+              backgroundColor: Colors.white,
+              child: const Icon(Icons.money, color: AppColors.primary, size: 20.0,),
+            ),
+          ],
+        ),
       ),
     );
   }
