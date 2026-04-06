@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:donation_app/widgets/cards/custom_card.dart';
+import 'package:donation_app/constants/app_colors.dart';
 
 class SecondPage extends StatefulWidget {
   const SecondPage({super.key});
@@ -15,7 +16,7 @@ class _SecondPageState extends State<SecondPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorScheme.primary,
+        backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         centerTitle: true,
         elevation: 0,
