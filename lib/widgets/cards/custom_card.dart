@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:donation_app/constants/app_colors.dart';
 
 class CustomCard extends StatelessWidget {
   final String imageUrl;
@@ -16,24 +17,34 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 150.0,
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(5.0),
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: AppColors.primary,
         borderRadius: BorderRadius.circular(15.0),
       ),
-      child: ListTile(
-        leading: ClipRRect(
-          borderRadius: BorderRadius.circular(14.0),
-          child: Image.network(
-            imageUrl,
-            width: 56,
-            height: 56,
-            fit: BoxFit.cover,
+      child: Column(
+        children: [
+          ListTile(
+            leading: imageUrl.isNotEmpty
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(14.0),
+                    child: Image.network(
+                      imageUrl,
+                      width: 56,
+                      height: 56,
+                      fit: BoxFit.cover,
+                    ),
+                  )
+                : CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Colors.grey[300],
+                    child: Icon(Icons.image, color: Colors.black54),
+                  ),
+            title: Text(title),
+            subtitle: Text(description),
           ),
-        ),
-        title: Text(title),
-        subtitle: Text(description),
+          const SizedBox(height: 5.0,)
+        ],
       ),
     );
   }
