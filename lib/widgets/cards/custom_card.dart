@@ -49,7 +49,11 @@ class CustomCard extends StatelessWidget {
             CircleAvatar(
               radius: 15.0,
               backgroundColor: Colors.white,
-              child: const Icon(Icons.person, color: AppColors.primary, size: 20.0,),
+              child: const Icon(
+                Icons.person,
+                color: AppColors.primary,
+                size: 20.0,
+              ),
             ),
           ],
         ),

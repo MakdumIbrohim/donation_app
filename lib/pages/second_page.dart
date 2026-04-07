@@ -10,6 +10,24 @@ class SecondPage extends StatefulWidget {
 }
 
 class _SecondPageState extends State<SecondPage> {
+  final List<DonationItem> _items = const [
+    DonationItem(
+      imageUrl: 'https://picsum.photos/seed/donate1/300/200',
+      title: 'Donasiku',
+      description: 'Bantu program pangan untuk daerah terpencil.',
+    ),
+    DonationItem(
+      imageUrl: 'https://picsum.photos/seed/donate2/300/200',
+      title: 'Pendidikan',
+      description: 'Dukung perlengkapan sekolah anak-anak.',
+    ),
+    DonationItem(
+      imageUrl: 'https://picsum.photos/seed/donate3/300/200',
+      title: 'Kesehatan',
+      description: 'Bantu biaya pengobatan dan ambulans.',
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -51,15 +69,36 @@ class _SecondPageState extends State<SecondPage> {
                 height: 1.5,
               ),
             ),
-            SizedBox(height: 12.0),
-            CustomCard(
-              imageUrl: 'https://placehold.co/300x200/png',
-              title: 'Donasiku',
-              description: 'Ini deskripsi',
+            const SizedBox(height: 12.0),
+            Expanded(
+              child: ListView.separated(
+                itemCount: _items.length,
+                separatorBuilder: (_, _) => const SizedBox(height: 12),
+                itemBuilder: (context, index) {
+                  final item = _items[index];
+                  return CustomCard(
+                    imageUrl: item.imageUrl,
+                    title: item.title,
+                    description: item.description,
+                  );
+                },
+              ),
             ),
           ],
         ),
       ),
     );
   }
+}
+
+class DonationItem {
+  final String imageUrl;
+  final String title;
+  final String description;
+
+  const DonationItem({
+    required this.imageUrl,
+    required this.title,
+    required this.description,
+  });
 }
