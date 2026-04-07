@@ -182,6 +182,7 @@ class PasswordField extends StatelessWidget {
     return _GlassField(
       child: TextFormField(
         style: const TextStyle(color: Colors.white),
+        cursorColor: Colors.white,
         decoration: _buildDecoration(
           labelText: 'Password',
           hintText: 'Masukkan Password',
