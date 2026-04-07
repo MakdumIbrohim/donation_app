@@ -5,12 +5,14 @@ class CustomCard extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String description;
+  final double? progress;
 
   const CustomCard({
     super.key,
     required this.imageUrl,
     required this.title,
     required this.description,
+    this.progress,
   });
 
   @override
@@ -19,8 +21,16 @@ class CustomCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(5.0),
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(15.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            spreadRadius: 1,
+            blurRadius: 1,
+            offset: Offset(1, 1),
+          ),
+        ],
       ),
       child: ListTile(
         // leading: imageUrl.isNotEmpty
@@ -38,7 +48,15 @@ class CustomCard extends StatelessWidget {
         //         backgroundColor: Colors.grey[300],
         //         child: const Icon(Icons.image, color: Colors.black54),
         //       ),
-        leading: Icon(Icons.image),
+        leading: Container(
+          width: 100.0,
+          height: 100.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(7.0),
+            color: AppColors.primary,
+          ),
+          child: Icon(Icons.image, color: Colors.white),
+        ),
         title: Text(title),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,14 +64,25 @@ class CustomCard extends StatelessWidget {
           children: [
             Text(description),
             const SizedBox(height: 8.0),
-            CircleAvatar(
-              radius: 15.0,
-              backgroundColor: Colors.white,
-              child: const Icon(
-                Icons.person,
-                color: AppColors.primary,
-                size: 20.0,
-              ),
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 12.0,
+                  backgroundColor: AppColors.primary,
+                  child: const Icon(
+                    Icons.attach_money,
+                    color: Colors.white,
+                    size: 20.0,
+                  ),
+                ),
+                const SizedBox(width: 5),
+                Expanded(
+                  child: LinearProgressIndicator(
+                    value: (progress ?? 0.0).clamp(0.0, 1.0),
+                    valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

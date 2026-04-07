@@ -15,16 +15,19 @@ class _SecondPageState extends State<SecondPage> {
       imageUrl: 'https://picsum.photos/seed/donate1/300/200',
       title: 'Donasiku',
       description: 'Bantu program pangan untuk daerah terpencil.',
+      progress: 0.7
     ),
     DonationItem(
       imageUrl: 'https://picsum.photos/seed/donate2/300/200',
       title: 'Pendidikan',
       description: 'Dukung perlengkapan sekolah anak-anak.',
+      progress: 0.6
     ),
     DonationItem(
       imageUrl: 'https://picsum.photos/seed/donate3/300/200',
       title: 'Kesehatan',
       description: 'Bantu biaya pengobatan dan ambulans.',
+      progress: 0.5
     ),
   ];
 
@@ -80,6 +83,7 @@ class _SecondPageState extends State<SecondPage> {
                     imageUrl: item.imageUrl,
                     title: item.title,
                     description: item.description,
+                    progress: item.progress,
                   );
                 },
               ),
@@ -95,10 +99,12 @@ class DonationItem {
   final String imageUrl;
   final String title;
   final String description;
+  final double? progress;
 
   const DonationItem({
     required this.imageUrl,
     required this.title,
     required this.description,
+    this.progress,
   });
 }
