@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:donation_app/constants/app_colors.dart';
 import 'package:donation_app/pages/second_page.dart';
@@ -32,31 +33,15 @@ class _LoginFormState extends State<LoginForm> {
               'Welcome back',
               style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.w700,
-                color: const Color(0xFF12372A),
+                color: Colors.white,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               'Masuk untuk melanjutkan kebaikan hari ini.',
               style: theme.textTheme.bodyMedium?.copyWith(
-                color: Colors.black54,
+                color: Colors.white,
                 height: 1.4,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: const Color(0xFFF4FBF9),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: const Text(
-                'Gunakan username: admin dan password: 12345',
-                style: TextStyle(
-                  color: Color(0xFF12372A),
-                  fontWeight: FontWeight.w600,
-                ),
               ),
             ),
             const SizedBox(height: 24),
@@ -130,13 +115,18 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                   elevation: 0,
                 ),
-                child: const Text('Masuk'),
+                child: Text('Masuk', style: TextStyle(
+                  color: Colors.white
+                ),),
               ),
             ),
             const SizedBox(height: 16),
             Center(
               child: TextButton(
                 onPressed: () {},
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                ),
                 child: const Text('Lupa password?'),
               ),
             ),
@@ -158,14 +148,17 @@ class UsernameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      decoration: _buildDecoration(
-        labelText: 'Username',
-        hintText: 'Masukkan Username',
-        icon: Icons.person_outline_rounded,
+    return _GlassField(
+      child: TextFormField(
+        style: const TextStyle(color: Colors.white),
+        decoration: _buildDecoration(
+          labelText: 'Username',
+          hintText: 'Masukkan Username',
+          icon: Icons.person_outline_rounded,
+        ),
+        onSaved: onSaved,
+        validator: validator,
       ),
-      onSaved: onSaved,
-      validator: validator,
     );
   }
 }
@@ -186,23 +179,50 @@ class PasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      decoration: _buildDecoration(
-        labelText: 'Password',
-        hintText: 'Masukkan Password',
-        icon: Icons.lock_outline_rounded,
-        suffixIcon: IconButton(
-          onPressed: onToggleVisibility,
-          icon: Icon(
-            isPasswordVisible
-                ? Icons.visibility_off_outlined
-                : Icons.visibility_outlined,
+    return _GlassField(
+      child: TextFormField(
+        style: const TextStyle(color: Colors.white),
+        decoration: _buildDecoration(
+          labelText: 'Password',
+          hintText: 'Masukkan Password',
+          icon: Icons.lock_outline_rounded,
+          suffixIcon: IconButton(
+            onPressed: onToggleVisibility,
+            icon: Icon(
+              isPasswordVisible
+                  ? Icons.visibility_off_outlined
+                  : Icons.visibility_outlined,
+            ),
           ),
         ),
+        obscureText: !isPasswordVisible,
+        onSaved: onSaved,
+        validator: validator,
       ),
-      obscureText: !isPasswordVisible,
-      onSaved: onSaved,
-      validator: validator,
+    );
+  }
+}
+
+class _GlassField extends StatelessWidget {
+  final Widget child;
+
+  const _GlassField({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(18),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.2),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.35)),
+            borderRadius: BorderRadius.circular(18),
+          ),
+          child: child,
+        ),
+      ),
     );
   }
 }
@@ -221,10 +241,12 @@ InputDecoration _buildDecoration({
   return InputDecoration(
     labelText: labelText,
     hintText: hintText,
-    prefixIcon: Icon(icon, color: const Color(0xFF4F6F52)),
+    labelStyle: const TextStyle(color: Colors.white),
+    hintStyle: const TextStyle(color: Colors.white70),
+    prefixIcon: Icon(icon, color: Colors.white),
     suffixIcon: suffixIcon,
     filled: true,
-    fillColor: const Color(0xFFF4FBF9),
+    fillColor: Colors.transparent,
     contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
     border: border,
     enabledBorder: border,
